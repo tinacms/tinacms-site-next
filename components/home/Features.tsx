@@ -310,9 +310,55 @@ const FEATURE_BLOCKS = {
 }
 
 export const FeatureVideo = ({ src }) => {
+  const videoRef = React.useRef(null)
+
+  React.useEffect(() => {
+    if (videoRef && videoRef.current) {
+      if ('IntersectionObserver' in window) {
+        var lazyVideoObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(video) {
+            if (video.isIntersecting) {
+              for (var source in video.target.children) {
+                var videoSource = video.target.children[source]
+                if (
+                  typeof videoSource.tagName === 'string' &&
+                  videoSource.tagName === 'SOURCE'
+                ) {
+                  // @ts-ignore
+                  videoSource.src = videoSource.dataset.src
+                }
+              }
+
+              // @ts-ignore
+              video.target.load()
+              lazyVideoObserver.unobserve(video.target)
+            }
+          })
+        })
+
+        lazyVideoObserver.observe(videoRef.current)
+      } else {
+        for (var source in videoRef.current.children) {
+          var videoSource = videoRef.current.children[source]
+          if (
+            typeof videoSource.tagName === 'string' &&
+            videoSource.tagName === 'SOURCE'
+          ) {
+            // @ts-ignore
+            videoSource.src = videoSource.dataset.src
+          }
+        }
+
+        // @ts-ignore
+        videoRef.current.load()
+      }
+    }
+  }, [videoRef])
+
   return (
     <>
       <video
+        ref={videoRef}
         className="video"
         autoPlay={true}
         loop
@@ -321,11 +367,11 @@ export const FeatureVideo = ({ src }) => {
         poster={`https://res.cloudinary.com/forestry-demo/video/upload/so_0/${src}.jpg`}
       >
         <source
-          src={`https://res.cloudinary.com/forestry-demo/video/upload/q_100,h_584/e_accelerate:-20/${src}.webm`}
+          data-src={`https://res.cloudinary.com/forestry-demo/video/upload/q_100,h_584/e_accelerate:-20/${src}.webm`}
           type="video/webm"
         />
         <source
-          src={`https://res.cloudinary.com/forestry-demo/video/upload/q_80,h_584/e_accelerate:-20/${src}.mp4`}
+          data-src={`https://res.cloudinary.com/forestry-demo/video/upload/q_80,h_584/e_accelerate:-20/${src}.mp4`}
           type="video/mp4"
         />
       </video>
