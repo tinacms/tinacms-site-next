@@ -23,9 +23,9 @@ We are going to use the [`object` type](/docs/schema/#grouping-properties-within
 
 ```ts
 import { defineConfig } from 'tinacms'
-import type { TinaTemplate } from 'tinacms'
+import type { Template } from 'tinacms'
 
-const heroBlock: TinaTemplate = {
+const heroBlock: Template = {
   name: 'hero',
   label: 'Hero',
   ui: {
@@ -57,7 +57,7 @@ const heroBlock: TinaTemplate = {
   ],
 }
 
-const featureBlock: TinaTemplate = {
+const featureBlock: Template = {
   name: 'features',
   label: 'Features',
   fields: [
@@ -82,7 +82,7 @@ const featureBlock: TinaTemplate = {
   ],
 }
 
-const contentBlock: TinaTemplate = {
+const contentBlock: Template = {
   name: 'content',
   label: 'Content',
   ui: {
