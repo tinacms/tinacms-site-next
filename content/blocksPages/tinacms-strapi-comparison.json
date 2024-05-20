@@ -26,6 +26,10 @@
         {
           "headline": "Markdown Support",
           "text": "TinaCMS supports markdown content, simplifying the process of content creation and management. Markdown provides a straightforward and accessible method of creating content."
+        },
+        {
+          "headline": "Inline Editing",
+          "text": "TinaCMS allows for inline editing directly on your site, providing a WYSIWYG (What You See Is What You Get) experience that is highly intuitive and user-friendly"
         }
       ],
       "_template": "featureGrid"

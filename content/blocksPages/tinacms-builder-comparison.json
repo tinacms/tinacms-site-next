@@ -10,7 +10,7 @@
         "narrow": true,
         "color": "white"
       },
-      "content": "## Why Choose TinaCMS Over Builder.io?\n\nWhile both platforms offer visual editing, TinaCMS takes a different approach. Builder has you render all your visual components with a special `<Builder` component, but TinaCMS is designed to work with your existing site structure.",
+      "content": "## Why Choose TinaCMS Over Builder.io?\n\nWhile both platforms offer visual editing, TinaCMS takes a different approach. Builder has you render all your visual components with a special `<Builder>` component, but TinaCMS is designed to work with your existing site structure.",
       "_template": "content"
     },
     {

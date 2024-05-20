@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "headline": "TinaCMS vs Netlify CMS: Why TinaCMS Stands Out",
+      "headline": "TinaCMS vs DecapCMS: Why TinaCMS Stands Out",
       "text": "Unlock the unique capabilities of TinaCMS for your projects.",
       "_template": "hero"
     },
@@ -10,7 +10,7 @@
         "narrow": true,
         "color": "white"
       },
-      "content": "## Why Choose TinaCMS Over Netlify CMS?\n\nTinaCMS offers a content API, visual editing capabilities, and an enhanced local development workflow that sets it apart from Netlify CMS. Here's why TinaCMS might be a better fit for your project:\n",
+      "content": "## Why Choose TinaCMS Over DecapCMS?\n\nTinaCMS offers a content API, visual editing capabilities, and an enhanced local development workflow that sets it apart from DecapCMS. Here's why TinaCMS might be a better fit for your project:\n",
       "_template": "content"
     },
     {
@@ -58,7 +58,7 @@
     }
   ],
   "seo": {
-    "title": "TinaCMS vs Netlify CMS: Unleash the Power of TinaCMS",
+    "title": "TinaCMS vs DecapCMS: Unleash the Power of TinaCMS",
     "description": "Explore why TinaCMS might be the right choice for your project. Discover features like a content API, visual editing, seamless local development workflow, Git-based content management, and more with TinaCMS."
   }
 }
