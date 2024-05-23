@@ -21,8 +21,8 @@ export const Actions = ({ items, align = 'left' }) => {
       >
         {items &&
           items.map((item, index) => {
-            const id = sanitizeLabel(item.label);
             if (item.variant == 'command') {
+              const id = sanitizeLabel(item.label);
               return (
                 <React.Fragment key={item.label}>
                   {index === 2 && <span className="or-text">or</span>} {}
@@ -127,7 +127,7 @@ export const CodeButton = ({ children, label, ...props }) => {
 
   const clickEvent = () => {
     setCopied(true)
-    copyToClipboard(children)
+    copyToClipboard(children)    
     setTimeout(() => {
       setCopied(false)
     }, 2000)
