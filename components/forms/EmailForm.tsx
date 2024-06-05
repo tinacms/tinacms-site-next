@@ -52,7 +52,7 @@ export const EmailForm = (props: EmailFormProps) => {
 
   return (
     <div className="grid lg:grid-cols-2 grid-cols-1 gap-1 bg-white max-w-7xl mx-auto">
-      <div className="relative lg:h-full md:h-80 h-52">
+      <div className="relative lg:h-full md:h-80 h-32">
         <Image 
           src={BettyWithLlama} 
           alt="Betty with a llama" 
@@ -67,21 +67,21 @@ export const EmailForm = (props: EmailFormProps) => {
           onSubmit={handleSubmit}
           className={`flex flex-col justify-center pt-8 pb-9 p-10 md:p-12 lg:p-20 ${props.isFooter ? 'w-auto' : ''}`}
         >
-          <h1 className="inline-block lg:text-left md:text-left sm:text-center m-0 md:text-4xl font-tuner lg:text-3xl text-2xl lg:leading-tight bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent">
+          <h1 className="inline-block lg:text-left md:text-left sm:text-center m-0 md:text-4xl font-tuner lg:text-3xl text-xl lg:leading-tight bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent">
             Join the Herd! 🦙
           </h1>
           <p className="text-left w-full mt-2 mb-4">
             Become part of our coding community and stay updated with the latest tips and news. Learn more about the community and get llama-zing content delivered to your inbox!
           </p>
-          {message.text && (
-            <p className={`font-tuner text-sm mb-4 flex items-center gap-2 ${message.type === 'success' ? 'text-green-500' : message.type === 'warning' ? 'text-orange-500' : 'text-red-500'}`}>
-              {message.type === 'success' && <TiTick />}
-              {message.type === 'warning' && <IoIosWarning />}
-              {message.type === 'error' && <ImCross />}
-              <span>{message.text}</span>
-            </p>
-          )}
-          <div className="flex flex-col gap-1.5 md:flex-row md:gap-2 w-full md:mb-1">
+                      {message.text && (
+              <p className={`font-tuner text-sm mb-4 flex items-center gap-2 ${message.type === 'success' ? 'text-green-500' : message.type === 'warning' ? 'text-orange-500' : 'text-red-500'}`}>
+                {message.type === 'success' && <TiTick />}
+                {message.type === 'warning' && <IoIosWarning />}
+                {message.type === 'error' && <ImCross />}
+                <span>{message.text}</span>
+              </p>
+            )}
+                    <div className="flex flex-col gap-1.5 md:flex-row md:gap-2 w-full md:mb-1">
             <Input
               placeholder="First name"
               name="firstName"
