@@ -1,3 +1,14 @@
-# Ignore next.js build cache
-
+# Ignore Next.js build cache
 .next/cache
+
+# Ignore Git directory
+.git
+
+# Ignore node_modules directory
+node_modules
+
+# Ignore specific files
+public/img/large-image.jpg
+
+# Ignore large images
+public/img/*.png
