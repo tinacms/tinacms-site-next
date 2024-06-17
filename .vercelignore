@@ -2,8 +2,7 @@
 .next/cache
 .next/**
 *.cache
-public
-app
+
 
 # Ignore Git directory
 .git
