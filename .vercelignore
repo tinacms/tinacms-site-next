@@ -1,5 +1,9 @@
 # Ignore Next.js build cache
 .next/cache
+.next/**
+*.cache
+public
+app
 
 # Ignore Git directory
 .git
