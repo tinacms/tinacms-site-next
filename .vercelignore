@@ -7,8 +7,3 @@
 # Ignore node_modules directory
 node_modules
 
-# Ignore specific files
-public/img/large-image.jpg
-
-# Ignore large images
-public/img/*.png
