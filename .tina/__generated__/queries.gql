@@ -68,6 +68,14 @@ query doc($relativePath: String!) {
   }
 }
 
+query docTitle($relativePath: String!) {
+  doc(relativePath: $relativePath) {
+    ... on Document {
+      title
+    }
+  }
+}
+
 query docConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: DocFilter) {
   docConnection(
     before: $before

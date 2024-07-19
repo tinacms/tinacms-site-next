@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { NextSeo } from 'next-seo'
 import { GetStaticProps, GetStaticPaths } from 'next'
@@ -14,6 +14,11 @@ import * as ga from '../../utils/ga'
 import { Breadcrumbs } from 'components/DocumentationNavigation/Breadcrumbs'
 import { useTocListener } from 'utils/toc_helpers'
 import SetupOverview from '../../components/layout/setup-overview'
+import { useTina } from 'tinacms/dist/react'
+import client from 'tina/__generated__/client'
+import { TinaMarkdown } from 'tinacms/dist/rich-text'
+import { aacomponents } from 'components/layout/TinaMarkdownComponents'
+import { fetchData } from 'utils/getNextTitle'
 
 export function DocTemplate(props) {
   if (props.file.fileRelativePath.includes('setup-overview')) {
@@ -23,38 +28,41 @@ export function DocTemplate(props) {
 }
 
 function _DocTemplate(props) {
-  // fallback workaround
   if (props.notFound) {
     return <Error statusCode={404} />
   }
-  const data = props.file.data
 
+
+  const { data } = useTina({
+    query: props.new.results.query,
+    data: props.new.results.data,
+    variables: props.new.results.variables,
+  })
   const router = useRouter()
   const isCloudDocs = router.asPath.includes('tina-cloud')
 
-  const isBrowser = typeof window !== `undefined`
-
-  const frontmatter = data.frontmatter
-  const markdownBody = data.markdownBody
-  const excerpt = props.file.data.excerpt
-  const tocItems = props.tocItems
-
   const { activeIds, contentRef } = useTocListener(data)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleRouteChange = (url) => {
       ga.pageview(url)
     }
-    //When the component is mounted, subscribe to router changes
-    //and log those page views
     router.events.on('routeChangeComplete', handleRouteChange)
 
-    // If the component is unmounted, unsubscribe
-    // from the event with the `off` method
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange)
     }
   }, [router.events])
+
+  const frontmatter = props.file.data.frontmatter
+  const markdownBody = props.file.data.markdownBody
+  const excerpt = props.file.data.excerpt
+  const tocItems = props.tocItems
+
+  console.log('This is the data doc body', data.doc.body.children)
+  console.log('This is the markdown Body', markdownBody)
+
+
   return (
     <>
       <NextSeo
@@ -71,20 +79,21 @@ function _DocTemplate(props) {
         <DocsGrid>
           <DocGridHeader>
             <Breadcrumbs navItems={props.docsNav} />
-            <DocsPageTitle>{frontmatter.title}</DocsPageTitle>
+            <DocsPageTitle>{data.doc.title}</DocsPageTitle>
           </DocGridHeader>
           <DocGridToc>
             <Toc tocItems={tocItems} activeIds={activeIds} />
           </DocGridToc>
           <DocGridContent ref={contentRef}>
             <hr />
-            <MarkdownContent escapeHtml={false} content={markdownBody} />
+            {/* <MarkdownContent escapeHtml={false} content={markdownBody} /> */}
+            <TinaMarkdown content={data.doc.body.children} />
             <LastEdited date={frontmatter.last_edited} />
             {(props.prevPage?.slug !== null ||
               props.nextPage?.slug !== null) && (
               <DocsPagination
-                prevPage={props.prevPage}
-                nextPage={props.nextPage}
+                prevPage={data.doc.prev}
+                nextPage={data.doc.next} 
               />
             )}
           </DocGridContent>
@@ -107,12 +116,14 @@ export const getStaticProps: GetStaticProps = async function (props) {
   const slug = slugs.join('/')
 
   try {
-    return await getDocProps(props, slug)
+    const results = await client.queries.doc({ relativePath: `${slug}.md` })
+    const legacy_results = await getDocProps(props, slug);
+    return { props: { new: { results }, ...legacy_results.props } }
   } catch (e) {
     if (e) {
       return {
         props: {
-          error: { ...e }, //workaround since we cant return error as JSON
+          error: { ...e }, // workaround since we can't return error as JSON
         },
       }
     } else if (e instanceof NotFoundError) {

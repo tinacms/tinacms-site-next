@@ -1,34 +1,48 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import RightArrowSvg from '../../public/svg/right-arrow.svg'
 import { DynamicLink } from '../ui/DynamicLink'
-interface NextPrevPageProps {
-  title: string
-  slug: string
-}
+import { fetchData } from 'utils/getNextTitle'
+import next from 'next'
 
 interface PaginationProps {
-  prevPage?: NextPrevPageProps
-  nextPage?: NextPrevPageProps
+  prevPage?: string | null
+  nextPage?: string | null
 }
 
 export function DocsPagination({ prevPage, nextPage }: PaginationProps) {
+  // console.log(prevPage, nextPage)
+
+  const [nextTitle, setNextTitle] = useState(null);
+  // useEffect(() => {
+  //   const getNextTitle = async () => {
+  //     if (nextPage !== null)
+  //     {
+  //       const titleOfNextPage = await fetchData(nextPage);
+  //       console.log('Title of Next Page is', titleOfNextPage);
+  //       setNextTitle(titleOfNextPage)
+  //     }
+  //   }
+
+  //   getNextTitle();
+  // }, [nextPage]);
+
   return (
     <Wrapper>
-      {prevPage && prevPage.slug && (
-        <DynamicLink href={`${prevPage.slug}`} passHref>
+      {prevPage && prevPage && (
+        <DynamicLink href={`${prevPage}`} passHref>
           <PaginationLink previous>
             <span>Previous</span>
-            <h5>{prevPage.title}</h5>
+            <h5>{prevPage}</h5>
             <RightArrowSvg />
           </PaginationLink>
         </DynamicLink>
       )}
-      {nextPage && nextPage.slug && (
-        <DynamicLink href={`${nextPage.slug}`} passHref>
+      {nextPage && nextPage && (
+        <DynamicLink href={`${nextPage}`} passHref>
           <PaginationLink>
             <span>Next</span>
-            <h5>{nextPage.title}</h5>
+            <h5>{nextPage}</h5>
             <RightArrowSvg />
           </PaginationLink>
         </DynamicLink>

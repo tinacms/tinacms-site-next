@@ -21,12 +21,15 @@ const tinaConfig = defineConfig({
       return pack.TinaCloudCloudinaryMediaStore
     },
   },
-
   build: { outputFolder: 'admin', publicFolder: 'public' },
   cmsCallback: (cms) => {
     import('react-tinacms-editor').then(({ MarkdownFieldPlugin }) => {
       cms.plugins.add(MarkdownFieldPlugin)
     })
+    // Optionally add MDX support if needed
+    // import('react-tinacms-mdx').then(({ MdxFieldPlugin }) => {
+    //   cms.plugins.add(MdxFieldPlugin)
+    // })
     return cms
   },
 })

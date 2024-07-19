@@ -108,6 +108,12 @@ export const schema = defineSchema({
       label: 'Docs',
       path: 'content/docs',
       format: 'md',
+      ui: {
+        router: ({ document }) => {
+          console.log(document);
+          return `/docs/${document._sys.breadcrumbs.join('/')}`
+        }
+      },
       fields: [
         {
           name: 'title',
@@ -138,6 +144,7 @@ export const schema = defineSchema({
           name: 'body',
           label: 'Body',
           isBody: true,
+          parser: {type:'markdown', skipEscaping: 'html'},
         },
       ],
     },

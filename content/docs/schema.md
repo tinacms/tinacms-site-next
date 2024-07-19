@@ -1,16 +1,17 @@
 ---
-title: Content Modeling with TinaCMS
 id: /docs/schema/
-next: '/docs/features/data-fetching'
+title: Content Modeling with TinaCMS
+last_edited: ''
+next: /docs/features/data-fetching
 ---
 
 ## Introduction
 
 The Tina schema defines the shape of your content. Tina uses a "content-modeling as code" approach. This has a few benefits compared to modelling through a UI:
 
-- The schema is version-controlled
-- Mutating the schema is easy, as you can test out changes locally, or in a branch.
-- The developer can extend the schema in interesting ways (custom validation, custom UI fields, etc).
+* The schema is version-controlled
+* Mutating the schema is easy, as you can test out changes locally, or in a branch.
+* The developer can extend the schema in interesting ways (custom validation, custom UI fields, etc).
 
 The content model, and all configuration code is defined in a file called `tina/config.{ts,js,tsx}`.
 
@@ -63,7 +64,7 @@ Once we've defined a collection, we can edit its fields through the Tina UI, or 
 
 ## "List" fields
 
-Specifying `list: true` on _any_ field type will turn that field into an array of items:
+Specifying `list: true` on *any* field type will turn that field into an array of items:
 
 ```js
 // ...
@@ -81,7 +82,7 @@ fields: [
 
 ## Limiting values to a set of options
 
-Any _scalar_ field can accept an `options` array, note that in the example below we're using both `options` and `list` properties:
+Any *scalar* field can accept an `options` array, note that in the example below we're using both `options` and `list` properties:
 
 ```js
 // ...
@@ -247,7 +248,7 @@ export default defineConfig({
 
 ## Referencing another document
 
-The `reference` field connects one document to another and only needs to be defined on _one_ side of the relationship. You can specify any number of collections you'd like to connect:
+The `reference` field connects one document to another and only needs to be defined on *one* side of the relationship. You can specify any number of collections you'd like to connect:
 
 ```js
 // ...
@@ -269,23 +270,23 @@ fields: [
 
 Each field in a collection can be of the following `type`:
 
-### _scalar types_
+### *scalar types*
 
-- [string](/docs/reference/types/string/)
-- [datetime](/docs/reference/types/datetime/)
-- [boolean](/docs/reference/types/boolean/)
-- [image](/docs/reference/types/image/)
-- [number](/docs/reference/types/number/)
+* [string](/docs/reference/types/string/)
+* [datetime](/docs/reference/types/datetime/)
+* [boolean](/docs/reference/types/boolean/)
+* [image](/docs/reference/types/image/)
+* [number](/docs/reference/types/number/)
 
-### _nonscalar types_
+### *nonscalar types*
 
-- [reference](/docs/reference/types/reference/)
-- [object](/docs/reference/types/object/)
-- [rich-text](/docs/reference/types/rich-text/)
+* [reference](/docs/reference/types/reference/)
+* [object](/docs/reference/types/object/)
+* [rich-text](/docs/reference/types/rich-text/)
 
 ## Video Tutorial
 
-For those who prefer to learn from video, you can check out a snippet on media from our ["TinaCMS Deep Dive"](https://www.youtube.com/watch?v=PcgnJDILv4w&list=PLPar4H9PHKVqoCwZy79PHr8-W_vA3lAOB&pp=iAQB) series.
+For those who prefer to learn from video, you can check out a snippet on media from our ["TinaCMS Deep Dive"](https://www.youtube.com/watch?v=PcgnJDILv4w\&list=PLPar4H9PHKVqoCwZy79PHr8-W_vA3lAOB\&pp=iAQB) series.
 
 <div style="position:relative;padding-top:56.25%;">
   <iframe width="560" frameborder="0" allowfullscreen
@@ -295,6 +296,6 @@ For those who prefer to learn from video, you can check out a snippet on media f
 
 ## Summary
 
-- Your content is modeled in the `tina/config.{ts,js,tsx}` in your repo using `defineConfig`.
-- Your content model contains an array of "collections". A "collection" maps a content type to a directory in your repo.
-- A "collection" contains multiple fields, which can be of multiple scalar or non-scalar data types.
+* Your content is modeled in the `tina/config.{ts,js,tsx}` in your repo using `defineConfig`.
+* Your content model contains an array of "collections". A "collection" maps a content type to a directory in your repo.
+* A "collection" contains multiple fields, which can be of multiple scalar or non-scalar data types.
