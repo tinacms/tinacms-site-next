@@ -586,10 +586,6 @@
     {
       "source": "/guides/tinacms/nextjs-internationalization/guide",
       "destination": "/guides/tinacms/adding-internationalization-to-tina/guide"
-    },
-    {
-      "source": "/faq",
-      "destination": "/docs/introduction/faq"
     }
   ]
 }
