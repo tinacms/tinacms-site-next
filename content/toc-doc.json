@@ -531,6 +531,10 @@
                 "slug": "/docs/reference/media/external/s3/"
               }
             ]
+          },
+          {
+            "title": "Overriding the Accepted Default Media Types",
+            "slug": "/docs/reference/media/override-default-media-types/"
           }
         ]
       },
