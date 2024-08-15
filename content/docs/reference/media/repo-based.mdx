@@ -47,54 +47,6 @@ This property determines whether media files can be uploaded, edited, or deleted
 * **`static: true`** Editors cannot upload/delete media (static assets)
 * **`static: false`** (default): Editors can upload/delete media (dynamic assets).
 
-### Overriding the default accepted media types
-The following file types are supported by default
-
-| Format                                                     | MIME Type                                                    | Examples                       |
-|------------------------------------------------------------|--------------------------------------------------------------|--------------------------------|
-| Adobe InDesign                                             | `application/x-indesign`                                     | .indd                          |
-| Apple HTTP Live Streaming                                  | `application/vnd.apple.mpegurl`                              | .m3u8                          |
-| Binary File                                                | `application/octet-stream`                                   | .bin                           |
-| Filmbox                                                    | `model/fbx`                                                  | .fbx                           |
-| GL Transmission Format (JSON)                              | `model/gltf+json`                                            | .gltf                          |
-| Images                                                     | `image/*`                                                    | .jpg, .png, .gif, etc.         |
-| JSON                                                       | `application/json`                                           | .json                          |
-| JSON-LD                                                    | `application/ld+json`                                        | .jsonld                        |
-| Material Exchange Format                                   | `application/mxf`                                            | .mxf                           |
-| Microsoft Excel (Legacy)                                   | `application/vnd.ms-excel`                                   | .xls                           |
-| Microsoft Excel (OpenXML)                                  | `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` | .xlsx                          |
-| Microsoft Word (Legacy)                                    | `application/msword`                                         | .doc                           |
-| Microsoft Word (OpenXML)                                   | `application/vnd.openxmlformats-officedocument.wordprocessingml.document` | .docx                          |
-| MPEG-DASH                                                  | `application/dash+xml`                                       | .mpd                           |
-| PDF                                                        | `application/pdf`                                            | .pdf                           |
-| Polygon File Format                                        | `model/ply`                                                  | .ply                           |
-| PostScript                                                 | `application/postscript`                                     | .ps, .eps, etc.                |
-| Text Files                                                 | `text/*`                                                     | .txt, .md, etc.                |
-| U3D Mesh                                                   | `model/u3d+mesh`                                             | .u3d                           |
-| USDZ Zip                                                   | `model/vnd.usdz+zip`                                         | .usdz                          |
-| Videos                                                     | `video/*`                                                    | .mp4, .avi, .mkv, etc.         |
-
-
-If you would like to specify your own allowed file types, add the following to the  **`media`** property
-
-```javascript
-//tina/config.{ts,js}
-
-export default defineConfig({
-  // ...
-  media: {
-    tina: {
-      //..
-    },
-    accept: ['image/jpeg', 'video/mp4'],
-  },
-})
-```
-
-### `accept` (List\<String\>)
-
-This property determines the filetypes that can be uploaded.
-
 ### next/image
 
 If you are using Next images, you will need to add the following to your `next.config.js` file to allow access to external images hosted on the Tina media hostname:
