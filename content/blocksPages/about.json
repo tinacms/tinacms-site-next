@@ -15,7 +15,6 @@
       "text": " TinaCMS is a developer-friendly, open-source CMS powered by Git and Markdown. Enjoy live previews, real-time editing, and seamless integration for devs-all while keeping content creators in control. No databases, no hassle.",
       "margin": " lg:pb-24",
       "spacing": "",
-      "mobileTextSize": true,
       "_template": "hero"
     },
     {
@@ -100,7 +99,7 @@
       "items": [
         {
           "headline": "2024: Acquired by SSW",
-          "content": "SSW loved using Tina so much that they reached out to help and ended up acquiring TinaCMS, bringing greater enterprise resources, support, and expertise. \n\nVersion 2 was released, with big updates including improved content indexing and better performance. Additionally, the team launched the TinaGPT chatbot in June, integrating AI-driven assistance into the platform.\n"
+          "content": "SSW loved using Tina so much that they reached out to help and **[SSW acquired TinaCMS](https://adamcogan.com/2024/05/15/ssw-purchases-tinacms/)**, bringing greater enterprise resources, support, and expertise. \n\n**Version 2** was released, with big updates including improved content indexing and better performance. Additionally, the team launched the TinaGPT chatbot in June, integrating AI-driven assistance into the platform.\n"
         },
         {
           "headline": "2023: 10,000 stars on GitHub ⭐  ",
