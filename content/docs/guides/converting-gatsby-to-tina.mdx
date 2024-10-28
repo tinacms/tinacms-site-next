@@ -1,0 +1,336 @@
+---
+title: Converting an existing Gatsby project to TinaCMS
+last_edited: '2024-10-25T08:29:23.867Z'
+next: content/docs/cli-overview.mdx
+previous: content/docs/contextual-editing/overview.mdx
+---
+
+## Introduction
+
+In this tutorial we'll be showing you how you might go about converting an existing gatsby-mdx blog to use TinaCMS. We've created a starter repo for you to follow along with. [https://github.com/Calinator444/gatsby-convert-remark-to-mdx](https://github.com/Calinator444/gatsby-convert-remark-to-mdx). The repo is a fork of the official [Gatsby md blog starter](https://www.gatsbyjs.com/starters/gatsbyjs/gatsby-starter-blog).
+
+## Limitations
+
+There are a few limitations with the approach outlined in this guide.
+
+- You don't get visual editing
+- You lose out in Gatsby's image optimization
+- Gatsby uses Github Flavoured Markdown, which TinaCMS doesn't fully support
+
+## Getting started
+
+First you'll want to make sure you have the correct version of node installed. We'll be using the node version specified in the repo's `.nvmrc` file, v20.12.0. You can run the code below to make sure you have the correct version installed.
+
+```powershell
+node --version
+```
+
+Once you've made sure you have the right version of node installed clone the project we'll be using for this tutorial. Afterwards you'll want to check into the directory we'll be using.
+
+```powershell
+git clone https://github.com/Calinator444/gatsby-convert-remark-to-mdx
+cd my-blog-starter
+```
+
+## Adding Tina
+
+Awesome! You're all set up and ready start adding Tina. You can initialize Tina in the project using the command below.
+
+```powershell
+npx @tinacms/cli@latest init
+```
+
+After running the command above you'll receive a few propmts
+
+1. When prompted to select a framework select `“other”`
+2. Choose `“NPM”` as your package manager
+3. When asked if you'd like to use Typescript choose `“no”`
+4. Set the public assets location to `“public”`
+
+## Setting up Gatsby for Tina
+
+Now that we've added Tina to our project there's a few more steps we need to do to get Tina working with Gatsby. Add the following line at the top of `tina/config.js`
+
+```diff
+export default defineConfig({
++  client: { skip: true },
+// ...
+```
+
+Then add the following line in `gatsby-node.js`
+
+```diff
++ const express = require("express");
++ exports.onCreateDevServer = ({ app }) => {
++   app.use("/admin", express.static("public/admin"));
++ };
+```
+
+To save ourself some pain we can also change our startup command to make sure Tina gets run when we run our app in development mode.
+
+```diff
+  "scripts": {
+    "build": "gatsby build",
+-   "develop": "gatsby develop",
++   "develop": "npx tinacms dev -c \"gatsby develop\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+  }
+```
+
+## Configuring our Schema
+
+Now we've added Tina to our project but it's not pointing at our existing markdown files **(Oh noes!)**. Let fix that. Open up `tina/config.ts` and change the path to point to our blog directory.
+
+```diff
+schema: {
+  collections: [
+    {
+      name: "post",
+      label: "Posts",
+-     path: "content/posts"
++     path: content/blog"
+// ...
+```
+
+We'll also need to change the location where images get uploaded to. Since `"public"` doesn't get tracked in Git.
+
+> By moving our images to \`"static"\`, we're ensuring that they'll be tracked in git and bundled at run time.
+
+```diff
+export default defineConfig({
+  branch,
+
+  client: { skip: true },
+
+  // Get this from tina.io
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+  // Get this from tina.io
+  token: process.env.TINA_TOKEN,
+
+  build: {
+    outputFolder: "admin",
+    publicFolder: "public",
+  },
+  media: {
+    tina: {
+-     mediaRoot: "",
++     mediaRoot: "images",
+-     publicFolder: "public",
++     publicFolder: "static",
+
+    },
+// ...
+```
+
+## Setting up TinaMarkdown
+
+Now our project is set up to use TinaCMS. There's a problem though: our project is still using Gatsby's mdx parser instead of TinaCMS's. We'll need to to a bit of tweaking to get it working. First we'll edit the graphql query inside of `gatsby-node.js` so that it returns the raw markdown.
+
+```diff
+  const result = await graphql(`
+    {
+      allMdx(sort: { frontmatter: { date: ASC } }, limit: 1000) {
+        nodes {
+          Id
++         body
+// ...
+```
+
+Using the raw markdown we can generate a custom node that contains the markdown in a format that Tina can read. First We'll import Tina's markdown parser.
+Add this import to the top of `gatsby-node.js`.
+
+```diff
++ const { parseMDX } = require("@tinacms/dist")
+```
+
+Then inside of `onCreateNode` we'll create a new node containing an Abstract Syntax Tree we can pass into our TinaMarkdown component. We'll also need to serialize the result as a string so that we can return it as a single value from our page query.
+
+> Tina converts raw markdown into Abstract Syntax Trees containing the HTML needed to structure the page at build time.
+
+```diff
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
+  if (node.internal.type === `Mdx`) {
+    const value = createFilePath({ node, getNode })
++   createNodeField({
++     name: `tinaMarkdown`,
++     node,
++     value: JSON.stringify(parseMDX(node.body)),
++   })
+    createNodeField({
+      name: `slug`,
+      node,
+      value,
+    })
+  }
+}
+```
+
+There's still a few parameters we need to provide to `parseMDX` before it can do it's job.
+
+- The second argument is a copy of the field we defined in our config.js file.
+- The third is a callback function that the parser uses when coming across any image links. We'll use that callback function to update our image urls to point to the image directory we defined in our config file.
+
+```diff
++ const imageCallback = url => {
++   return url.replace(/^\./, "/images")
++ }
+exports.onCreateNode = ({ node, actions, getNode }) => {
+  const { createNodeField } = actions
+  if (node.internal.type === `Mdx`) {
+    const value = createFilePath({ node, getNode })
+    createNodeField({
+      name: `tinaMarkdown`,
+      node,
+      value: JSON.stringify(
+        parseMDX(
+          node.body,
++          {
++           type: "rich-text",
++           name: "body",
++           label: "Body",
++           isBody: true,
++           },
++           imageCallback
+        )
+      ),
+    })
+// ...
+```
+
+Now that we've defined our new custom node we should be ready to use it in our graphql query. Open `src/templates/blog-post.js` and add our custom node to the page query.
+
+```
+export const pageQuery = graphql`
+  query BlogPostBySlug(
+    $id: String!
+    $previousPostId: String
+    $nextPostId: String
+  ) {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+    mdx(id: { eq: $id }) {
+      id
++     fields {
++       tinaMarkdown
++     }
+// ...
+`
+```
+
+Now we're ready to parse the formatted markdown into our page component. We'll also remove the `"children"` prop which normally contains the html from Gatsby's mdx parser.
+
+```diff
+const BlogPostTemplate = ({
+  data: { previous, next, site, mdx: post },
+  location,
+- children,
+}) => {
+  const siteTitle = site.siteMetadata?.title || `Title`
++ const tinaMarkdownContent = JSON.parse(post.fields.tinaMarkdown)
+  return (
+    <Layout location={location} title={siteTitle}>
+      <article
+        className="blog-post"
+        itemScope
+        itemType="http://schema.org/Article"
+      >
+        <header>
+          <h1 itemProp="headline">{post.frontmatter.title}</h1>
+          <p>{post.frontmatter.date}</p>
+        </header>
+-         {children}
++         <TinaMarkdown content={tinaMarkdownContent} />
+        <hr />
+  // ...
+  )
+}
+```
+
+Unfortunately, we'll also need to move images to our media directory to have them appear on our pages. In this case there's only one image
+
+```powershell
+cp ./content/blog/hello-world/salty_egg.jpg static/images/salty_egg.jpg
+```
+
+We'll also need to update all of the lists to be the same format in `content/blog/hello-world/index.md`
+
+> You may need to update other elements on your own website. For a list of unsupported markdown elements for Tina see [our guide](https://tina.io/docs/reference/types/rich-text/?#unsupported-elements).
+
+```diff
+- - Red
++ * Red
+
+- - Green
++ * Green
+
+- - Blue
++ * Blue
+
+
+
+* Red
+
+* Green
+
+* Blue
+
+
+
+- - Red
++ * Red
+
+- - Green
++* Green
+
+- - Blue
++* Blue
+
+
+
+\`\`\`markdown
+
++ * Red
+
+- - Green
++ * Green
+
+- - Blue
++ * Blue
+
+
+
+* Red
+
+* Green
+
+* Blue
+
+- - Red
++ * Red
+
+- - Green
++* Green
+
+- - Blue
++* Blue
+
+\`\`\`
+```
+
+Now we should be able to read and edit our existing pages in Tina. We'll add some css to fix the images in our articles since they aren't being handled by to fix the width of our images since they're no longer being processed by gatsby. Add the following to the top of src/style.css. This will resize any images in our blog.
+
+```diff
++ img {
++  max-width
++ }
+```
+
+Congratulations! You've set up a Gatsby MDX blog to use Tina. You can run `npm run develop` to test it out.
