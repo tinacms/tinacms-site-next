@@ -1,6 +1,6 @@
 ---
 title: Converting an existing Gatsby project to TinaCMS
-last_edited: '2024-10-29T22:57:00.758Z'
+last_edited: '2024-10-29T23:30:34.812Z'
 next: content/docs/cli-overview.mdx
 previous: content/docs/contextual-editing/overview.mdx
 ---
@@ -15,9 +15,9 @@ In this tutorial, we'll guide you through converting an existing `gatsby-mdx` bl
 
 There are a few limitations to the approach outlined in this guide.
 
-- No visual editing support
-- Loss of Gatsby's image optimization
-- Gatsby uses GitHub Flavored Markdown, which TinaCMS does not fully support
+* No visual editing support
+* Loss of Gatsby's image optimization
+* Gatsby uses GitHub Flavored Markdown, which TinaCMS does not fully support
 
 ## Getting started
 
@@ -174,8 +174,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
 There's still a few parameters we need to provide to `parseMDX` before it can do it's job.
 
-- The second argument is a copy of the field we defined in our `config.js` file.
-- The third is a callback function that the parser uses when coming across any image links. We'll use that callback function to update our image URLs to point to the image directory we defined in our config file.
+* The second argument is a copy of the field we defined in our `config.js` file.
+* The third is a callback function that the parser uses when coming across any image links. We'll use that callback function to update our image URLs to point to the image directory we defined in our config file.
 
 ```diff
 + const imageCallback = url => {
