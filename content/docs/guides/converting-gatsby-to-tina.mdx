@@ -256,7 +256,9 @@ const BlogPostTemplate = ({
 }
 ```
 
-Unfortunately, we'll need to move images to our media directory to have them appear on our pages. In this case, there's only one image.
+## Migrating Content
+
+Unfortunately, we'll need to move images to our media directory to have them appear on our site. In this case, there's only one image.
 
 ```powershell
 cp ./content/blog/hello-world/salty_egg.jpg static/images/salty_egg.jpg
@@ -327,7 +329,9 @@ We'll also need to update all of the lists to be the same format in `content/blo
 ```
 ````
 
-Now we should be able to read and edit our existing pages in Tina.
+We should be able to read and edit our existing pages in TinaCMS now.
+
+## Styling
 
 We'll add some CSS to fix the images in our articles since they aren't being handled by to fix the width of our images since they're no longer being processed by Gatsby.
 
