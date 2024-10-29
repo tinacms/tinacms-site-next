@@ -336,3 +336,128 @@ Now we should be able to read and edit our existing pages in Tina. We'll add som
 ```
 
 Congratulations! You've set up a Gatsby MDX blog to use Tina. You can run `npm run develop` to test it out.
+
+## (Optional) Adding React components
+
+You can create React components in Gatsby as well, but you'll need to do some additional configuration compared to other frameworks. First, we'll modify the schema for our blog posts, defining the new React component we're planning to add.
+
+```diff
+schema: {
+    collections: [
+      {
+        name: "posts",
+        label: "Posts",
+        path: "content/blog",
+        format: "mdx",
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Title",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Body",
+            isBody: true,
++            templates: [
++              {
++                name: "RichBlockQuote",
++                label: "Rich Block Quote",
++                fields: [
++                  {
++                    name: "children",
++                    label: "Body",
++                    type: "rich-text",
++                  },
++                ],
++              },
++            ],
+          },
+        ],
+      },
+    ],
+  },
+```
+
+Then we'll provide the new schema information to our MDX parser function, ensuring that it knows what to do when it encounters our custom element.
+
+```diff
+createNodeField({
+    name: `tinaMarkdown`,
+    node,
+    value: JSON.stringify(
+      parseMDX(
+        node.body,
+        {
+          type: "rich-text",
+          name: "body",
+          label: "Body",
+          isBody: true,
++          templates: [
++            {
++              name: "RichBlockQuote",
++              label: "Rich Block Quote",
++              fields: [
++                {
++                  name: "children",
++                  label: "Body",
++                  type: "rich-text",
++                },
++              ],
++            },
++          ],
+        },
+        imageCallback
+      )
+    ),
+  })
+```
+
+Next, we'll define how the custom component will look in `blog-post.js`. We'll be parsing the child of the component into our TinaMarkdown renderer to give us rich text editing capabilities.
+
+```diff
++ const components = {
++ RichBlockQuote: props => {
++ return (
++     <blockquote>
++       <TinaMarkdown content={props.children} />
++     </blockquote>
++     )
++   },
++ }
+```
+
+Setting the body to the built-in `children` property in React allows us to use the children of our React component as a value. This has the added benefit of making our markdown easy to read. For example, check out the example below.
+
+```markdown
+<RichBlockQuote>
+  ### TinaCMS Rocks!
+
+Go check out the starter template on [tina.io](https://tina.io/docs/introduction/using-starter/)
+</RichBlockQuote>
+```
+
+The last thing you'll need to do is pass our component list into the `components` prop of our `TinaMarkdown` component.
+
+```diff
+  return (
+    <Layout location={location} title={siteTitle}>
+      <article
+        className="blog-post"
+        itemScope
+        itemType="http://schema.org/Article"
+      >
+        <header>
+          <h1 itemProp="headline">{post.frontmatter.title}</h1>
+          <p>{post.frontmatter.date}</p>
+        </header>
+
+-        <TinaMarkdown content={tinaMarkdownContent} />
++        <TinaMarkdown content={tinaMarkdownContent} components={components} />
+      // ...
+```
+
+You're all done! You should be able to add our new component to your articles now.
