@@ -10,6 +10,11 @@ export const featureGridTemplate: Template = {
   },
   fields: [
     {
+      name: 'sectionTitle',
+      label: 'Section Title',
+      type: 'string',
+    },
+    {
       name: 'items',
       label: 'Feature Items',
       type: 'object',

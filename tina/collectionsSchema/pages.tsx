@@ -23,6 +23,7 @@ import { tinaBannerTemplate } from '../../components/blocks/TinaBanner.template'
 import { highlightsSectionTemplate } from '../../components/blocks/HighlightsSection.template'
 import { spacerTemplate } from '../../components/blocks/Spacer.template'
 import {carouselFeatureTemplate} from '../../components/blocks/CarouselFeature.template'
+import { BannerTemplate } from '../../components/blocks/Banner.template'
 
 export const pagesCollection = {
     label: 'Pages',
@@ -102,7 +103,8 @@ export const pagesCollection = {
           tinaBannerTemplate as Template,
           highlightsSectionTemplate as Template,
           spacerTemplate as Template,
-          carouselFeatureTemplate as Template
+          carouselFeatureTemplate as Template,
+          BannerTemplate as Template,
         ],
       },
     ],

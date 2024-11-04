@@ -5,29 +5,37 @@
   },
   "blocks": [
     {
-      "headline": "Tina for Enterprise",
-      "text": "Reduce costs. Increase security & performance.",
-      "margin": "",
-      "spacing": "gap-10",
-      "buttons": [
+      "features": [
         {
-          "label": "Request 1-Pager",
-          "icon": false,
-          "variant": "white",
-          "size": "medium",
-          "url": "mailto:info@tina.io?subject=TinaCMS Enterprise 1-Pager&body=Hello, I'd like more information about the TinaCMS Enterprise Solution.",
-          "_template": "actions"
-        },
-        {
-          "label": "Schedule a Demo",
-          "icon": false,
-          "color": "blue",
-          "size": "medium",
-          "modal": "BookDemo.tsx",
-          "_template": "modalButton"
+          "headline": "Tina for Enterprise",
+          "text": "Reduce Costs. Increase Security & Performance",
+          "buttons": [
+            {
+              "label": "Schedule a Demo",
+              "icon": false,
+              "color": "blue",
+              "size": "medium",
+              "modal": "BookDemo.tsx",
+              "_template": "modalButton"
+            },
+            {
+              "label": "Download 1-Pager",
+              "icon": true,
+              "variant": "white",
+              "size": "medium",
+              "url": "/",
+              "_template": "actions"
+            }
+          ],
+          "media": [
+            {
+              "image": "/img/docs/contextual-editing/hello-world.png",
+              "_template": "image"
+            }
+          ]
         }
       ],
-      "_template": "hero"
+      "_template": "features"
     },
     {
       "title": "Trusted by",
@@ -127,42 +135,40 @@
       "_template": "logoGrid"
     },
     {
+      "blockHeadline": "Enterprise Benefits",
       "items": [
         {
-          "headline": "Built-in Version Control",
-          "text": "Tina is built on Git. Easily revert to earlier versions, undo mistakes, work on branches, and deploy with confidence."
+          "headline": "Custom Users",
+          "text": "Lorem ipsum dolor sit amet consectetur",
+          "icon2": "FaClock"
+        },
+        {
+          "headline": "Custom Roles",
+          "text": "Lorem ipsum dolor sit amet",
+          "icon2": "FaUnlock"
+        },
+        {
+          "headline": "Training & Support",
+          "text": "Lorem ipsum dolor sit amet",
+          "icon2": "FaCodeBranch"
+        },
+        {
+          "headline": "Custom Editorial Workflow",
+          "text": "Lorem ipsum dolor sit amet",
+          "icon2": "FaCloudDownloadAlt"
+        },
+        {
+          "headline": "SSO",
+          "text": "Lorem ipsum dolor sit amet",
+          "icon2": "FaPuzzlePiece"
         },
         {
           "headline": "Reduced Costs",
-          "text": "When switching to TinaCMS, most customers reduce licensing and operating costs by more than 50%. "
-        },
-        {
-          "headline": "Self-host",
-          "text": "TinaCMS can be self-hosted behind your firewall for increased security. "
-        },
-        {
-          "headline": "Editorial Workflow",
-          "text": "Editorial workflows backed by Git are built into Tina. Your content team can make Pull Requests (PRs) without leaving the CMS. ",
-          "actions": [
-            {
-              "label": "Learn More",
-              "icon": false,
-              "variant": "white",
-              "size": "small",
-              "url": "https://tina.io/editorial-workflow/"
-            }
-          ]
-        },
-        {
-          "headline": "Performance and Scalability",
-          "text": "Static architecture delivers fast load times and scalability by pre-rendering pages as static assets and serving them from a CDN. This often  eliminates down-time and results in a 10 x time-to-first-byte."
-        },
-        {
-          "headline": "Enhanced Security",
-          "text": "Reduce the attack surface without a database and server-side processing. Static files and strict access controls minimize vulnerabilities, offering a more secure architecture. "
+          "text": "Lorem ipsum dolor sit amet",
+          "icon2": "FaMarkdown"
         }
       ],
-      "_template": "featureGrid"
+      "_template": "carouselFeature"
     },
     {
       "title2": "\"Tina is transforming the way we do docs at Unity\"",
@@ -171,70 +177,46 @@
       "_template": "quote"
     },
     {
+      "sectionTitle": "Be Enterprise Ready",
       "items": [
         {
-          "headline": "Single Sign On",
-          "text": "Compatible with the most popular IdPs like Okta and support for both SAML and OIDC."
+          "headline": "Dedicated Support for Enterprise",
+          "text": "Both you and your developers can rest easy with a dedicated account manager and developer on your side. Our Enterprise Support offers personalized solutions and rapid response, ensuring seamless integration and support. \n"
         },
         {
-          "headline": "SOC 2 and GDPR",
-          "text": "Actively pursuing SOC 2 certification and GDPR compliance."
+          "headline": "Scalable Content Management",
+          "text": "Whether you're managing a single site or a global network, TinaCMS scales with you. Built on a high-performance foundation, it ensures smooth content delivery, empowering your growth."
         },
         {
-          "headline": "Uptime SLAs",
-          "text": "99.9% server uptime with swift communications if something impacts your sending integration."
+          "headline": "Collaborative Editing with Pull Request Workflow",
+          "text": "Empower your team with seamless collaboration and a structured Pull Request workflow. Users can submit content changes that initiate a Pull Request in GitHub, so team members can review, give feedback, and approve updates before they’re published, ensuring quality and collaboration.\n"
         },
         {
-          "headline": "Simplified Development & Maintenance",
-          "text": "Web teams become efficient when using modern frameworks and TinaCMS. Updates and deployments become simpler, reducing the risk of bugs and downtime."
-        },
-        {
-          "headline": "CI/CD ",
-          "text": "Integration with a modern CI/CD pipeline to perform all checks and run scripts.   Easily configure separate environments such as pre-production and  production. \n"
-        },
-        {
-          "headline": "No More Caching",
-          "text": "Remove the need for complex caching layers. Caching is built it with statically generated content distributed through CDN networks. \n"
+          "headline": "Flexibility Across Frameworks",
+          "text": "TinaCMS adapts to your tech stack with no compromises. Its flexible, high-performance capabilities support your framework, allowing you to scale with the tools you know and trust."
         }
       ],
       "_template": "featureGrid"
     },
     {
-      "options": {
-        "narrow": true,
-        "color": "white",
-        "align": "center"
-      },
-      "content": "## Reduced Hosting and Operating Costs\n\nMost customers reduce licensing and operating costs by more than 50% when switching to TinaCMS from other enterprise-level CMS platforms.\n",
-      "_template": "content"
-    },
-    {
-      "items": [
-        {
-          "headline": "Reduced Hosting and Operating Costs",
-          "text": "Most customers reduce licensing and operating costs by more than 50% when switching to TinaCMS from other enterprise-level CMS platforms."
-        },
-        {
-          "headline": "Training & Support",
-          "text": "Get access to the team behind TinaCMS for training, priority support, and custom development."
-        }
-      ],
-      "_template": "featureGrid"
-    },
-    {
-      "headline": "Get a Demo",
-      "text": "Discuss your project and get a demo from a TinaCMS team member",
+      "backgroundColour": "",
+      "headlineColor": "#FF5200",
+      "bodyColor": "#000000",
+      "headline": "Custom Support?",
+      "text": "We offer tailor-made packages to suit your needs. Contact us for details",
       "buttons": [
         {
-          "label": "Get a Demo",
-          "icon": false,
+          "label": "Schedule Call",
+          "icon": true,
           "color": "blue",
           "size": "medium",
           "modal": "BookDemo.tsx",
           "_template": "modalButton"
         }
       ],
-      "_template": "hero"
+      "image": "/img/TinaExpert.png",
+      "isReversed": true,
+      "_template": "Banner"
     }
   ]
 }

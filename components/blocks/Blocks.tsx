@@ -29,6 +29,7 @@ import { TinaBanner } from './TinaBanner';
 import { HighlightsSection } from './HighlightsSection';
 import { SpacerComponent } from './Spacer';
 import { CarouselFeatureBlock } from './CarouselFeature';
+import Banner from './Banner';
 
 export const Blocks = ({
   blocks,
@@ -54,6 +55,10 @@ export const Blocks = ({
         return (
           <FlyingBlock key={`block-${index}`} data={block} index={index} />
         );
+      case 'PageBlocksBanner':
+        return (
+          <Banner key={`block-${index}`} data={block}/>
+        )
       case 'PageBlocksEvents':
         return (
           <VerticalCardsBlock
