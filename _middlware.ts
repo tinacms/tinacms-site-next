@@ -1,18 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-export function middleware(req: NextRequest) {
-  const url = req.nextUrl.clone();
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-  if (url.pathname.startsWith('/demo')) {
-    
-    url.protocol = 'https';
-    url.hostname = 'quick-edit-demo.vercel.app';
-
-    
-    url.pathname = '/admin';
-
-    return NextResponse.rewrite(url);
+  if (pathname === '/demo') {
+    return NextResponse.rewrite(new URL('https://quick-edit-demo.vercel.app'));
   }
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ['/demo'],
+};
