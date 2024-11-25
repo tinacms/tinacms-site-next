@@ -29,6 +29,9 @@
   "resolutions": {
     "graphql": "^15.5.1"
   },
+  "overrides": {
+    "node-sass": "^8.0.0"
+  },
   "dependencies": {
     "@headlessui/react": "^2.1.8",
     "@heroicons/react": "^2.1.5",
