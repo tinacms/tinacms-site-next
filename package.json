@@ -11,7 +11,7 @@
     "dev": "tinacms dev  --noTelemetry  -c \"next dev\"",
     "build": "pnpm create-rss && tinacms build && next build",
     "export": "tinacms build && EXPORT_MODE=static,UNOPTIMIZED_IMAGES=true next build",
-    "postinstall": "echo 'Skipping node-sass binary check'",
+    "postinstall": "if [ \"$VERCEL\" != \"1\" ]; then npm rebuild node-sass; fi",
     "prestart": "tinacms build  && npm run export",
     "static-start": "serve out",
     "start": "next start",
