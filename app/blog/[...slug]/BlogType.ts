@@ -1,5 +1,4 @@
-import { TinaMarkdownContent } from "tinacms/dist/rich-text";
-
+import { TinaMarkdownContent } from 'tinacms/dist/rich-text';
 
 interface Sys {
   filename: string;
@@ -11,8 +10,8 @@ interface Sys {
 }
 
 interface Seo {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
 interface PostSummary {
@@ -24,13 +23,13 @@ export interface BlogPost {
   _sys: Sys;
   id: string;
   title: string;
-  date: string;
-  last_edited: string | null;
-  author: string;
-  seo: Seo | null;
-  prev: PostSummary | null;
-  next: PostSummary | null;
-  body: TinaMarkdownContent;
+  date?: string;
+  last_edited?: string | null;
+  author?: string;
+  seo?: Seo | null;
+  prev?: PostSummary | null;
+  next?: PostSummary | null;
+  body?: TinaMarkdownContent;
 }
 
 export interface BlogPageClientProps {
