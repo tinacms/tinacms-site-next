@@ -41,6 +41,11 @@
       "permanent": true
     },
     {
+      "source": "/docs/errors/faq",
+      "destination": "/docs/introduction/faq",
+      "permanent": true
+    },
+    {
       "source": "/faq/",
       "destination": "/docs/introduction/faq",
       "permanent": true
@@ -625,7 +630,7 @@
       "source": "/guides/experimental(.*)/",
       "destination": "/docs/legacy-redirect",
       "permanent": true
-    },   
+    },
     {
       "source": "/guides/gatsby(.*)/",
       "destination": "/docs/legacy-redirect",
@@ -752,10 +757,14 @@
       "permanent": true
     },
     {
-      "source":"/guides/next-js/internationalization/",
+      "source": "/guides/next-js/internationalization",
+      "destination": "/docs/guides/nextjs-internationalization",
+      "permanent": true
+    },
+    {
+      "source": "/guides/next-js/internationalization/",
       "destination": "/docs/guides/nextjs-internationalization",
       "permanent": true
     }
   ]
 }
-
