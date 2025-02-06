@@ -194,7 +194,7 @@
         },
         {
           "headline": "No More Caching",
-          "text": "Remove the need for complex caching layers. Caching is built it with statically generated content distributed through CDN networks. \n"
+          "text": "Remove the need for complex caching layers. Caching is built in, with statically generated content distributed through CDN networks. \n"
         }
       ],
       "_template": "featureGrid"

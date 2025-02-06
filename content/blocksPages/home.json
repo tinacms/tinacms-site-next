@@ -179,7 +179,7 @@
         },
         {
           "headline": "3rd Party Media",
-          "text": "Store Media assets is your repo or connect to S3, Cloudinary, DigitalOcean Spaces, etc. Or, use TinaCloud",
+          "text": "Store Media assets in your repo or connect to S3, Cloudinary, DigitalOcean Spaces, etc. Or, use TinaCloud",
           "icon2": "FaCloudDownloadAlt",
           "videoSrc": "/video/key-features/2024-09-19-key-features-3rd-party-media.webm",
           "button": {
