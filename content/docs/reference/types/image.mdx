@@ -9,25 +9,25 @@ previous: ''
 
 ```ts
 type ImageField = {
-  label: string
-  name: string
-  type: 'image'
-  list?: boolean
+  label: string;
+  name: string;
+  type: 'image';
+  list?: boolean;
   // See https://tina.io/docs/extending-tina/overview/ for customizing the UI
   ui?: {
-    label?: string
-    description?: string
-    component?: FC<any> | string | null
-    parse?: (value: string, name: string, field: F) => any
-    format?: (value: string, name: string, field: F) => any
+    label?: string;
+    description?: string;
+    component?: FC<any> | string | null;
+    parse?: (value: string, name: string, field: F) => any;
+    format?: (value: string, name: string, field: F) => any;
     validate?(
       value: string,
       allValues: any,
       meta: any,
       field: UIField<F, Shape>
-    ): string | undefined | void
-  }
-}
+    ): string | undefined | void;
+  };
+};
 ```
 
 ## Example
@@ -53,7 +53,7 @@ export default defineConfig({
       },
     ],
   },
-})
+});
 // ...
 ```
 
@@ -86,3 +86,110 @@ If you need to customize how an image is formatted in a field, you can use the `
 ```
 
 You can read more about `format` & `parse` [here](/docs/extending-tina/format-and-parse/).
+
+## Image optimiziation for Next.js
+
+### Adding set dimensions to images
+
+Next.js' [Image](https://nextjs.org/docs/pages/api-reference/components/image) component requires predefined dimensions to prevent layout shifts. We can add fields so that we have those dimensions at build time.
+
+```tsx
+export default defineConfig({
+  //...
+  schema: {
+    collections: [
+      {
+        name: 'posts',
+        label: 'Blog Posts',
+        path: 'content/posts',
+        format: 'mdx',
+        fields: [
+          {
+            type: 'image',
+            label: 'Hero image',
+            name: 'imgSrc',
+          },
+          {
+            type: 'string',
+            name: 'imgWidth',
+            label: 'Hero Image Width',
+          },
+          {
+            type: 'string',
+            name: 'imgHeight',
+            label: 'Hero Image Height',
+          },
+        ],
+      },
+    ],
+  },
+});
+```
+
+### Autofilling dimensions with a custom component (Advanced)
+
+To make things even easier we can define a custom component that populates the image dimensions for us.
+
+```tsx
+
+
+import { ImageField } from 'tinacms';
+
+const CustomImageField = (props) => {
+  // load the image within our component
+  const loadImage = async (url) => {
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    return img;
+  };
+  const { form, input } = props;
+
+  useEffect(() => {
+    loadImage(input.value).then((img) => {
+      // set the width and height of the image
+      form.change("imgWidth", img.naturalWidth);
+      form.change("imgHeight", img.naturalHeight);
+    });
+  }, [form, input]);
+  return ImageField(props);
+};
+
+export default defineConfig({
+  //...
+  schema: {
+    collections: [
+      {
+        name: 'posts',
+        label: 'Blog Posts',
+        path: 'content/posts',
+        format: 'mdx',
+        fields: [
+          {
+            ui: {
+              component: CustomImageField,
+            }
+            type: 'image',
+            label: 'Hero image',
+            name: 'imgSrc',
+          },
+          {
+            type: "string",
+            name: "imgWidth",
+            ui: {
+              component: "hidden",
+            },
+          },
+          {
+            type: "string",
+            name: "imgHeight",
+            ui: {
+              component: "hidden",
+            },
+          }
+        ],
+      },
+    ],
+  },
+})
+```
